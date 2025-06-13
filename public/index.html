@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kompas Sederhana</title>
+  <style>
+    body { text-align: center; font-family: sans-serif; margin-top: 50px; }
+    .compass {
+      width: 200px;
+      height: 200px;
+      border: 8px solid #333;
+      border-radius: 50%;
+      margin: 0 auto;
+      position: relative;
+      background: #f9f9f9;
+    }
+    .needle {
+      width: 6px;
+      height: 90px;
+      background: red;
+      position: absolute;
+      left: 50%;
+      top: 10px;
+      transform: translateX(-50%);
+      transform-origin: 50% 90%;
+      border-radius: 3px;
+    }
+    .center-dot {
+      width: 20px;
+      height: 20px;
+      background: #333;
+      border-radius: 50%;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+    }
+    .north-label {
+      position: absolute;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #333;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <h1>Kompas Sederhana</h1>
+  <div class="compass">
+    <div class="north-label">N</div>
+    <div class="needle" id="needle"></div>
+    <div class="center-dot"></div>
+  </div>
+  <p id="info"></p>
+  <script>
+    const needle = document.getElementById('needle');
+    const info = document.getElementById('info');
+
+    // Untuk perangkat mobile yang mendukung sensor kompas
+    if (window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === 'function') {
+      // iOS 13+ harus minta izin dulu
+      info.innerText = "Tekan untuk mengaktifkan kompas";
+      document.body.addEventListener('click', function askPermission() {
+        DeviceOrientationEvent.requestPermission().then(response => {
+          if (response === 'granted') {
+            window.addEventListener('deviceorientation', handleOrientation);
+            info.innerText = "Kompas aktif!";
+          } else {
+            info.innerText = "Izin ditolak.";
+          }
+        });
+        document.body.removeEventListener('click', askPermission);
+      });
+    } else if (window.DeviceOrientationEvent) {
+      window.addEventListener('deviceorientation', handleOrientation);
+      info.innerText = "Kompas aktif!";
+    } else {
+      info.innerText = "Kompas tidak didukung di perangkat ini.";
+    }
+
+    function handleOrientation(event) {
+      if (event.alpha !== null) {
+        // event.alpha = derajat arah utara (0 = utara, 90 = timur, dst)
+        needle.style.transform = `translateX(-50%) rotate(${-event.alpha}deg)`;
+      }
+    }
+  </script>
+</body>
+</html>

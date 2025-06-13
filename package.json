@@ -1,0 +1,42 @@
+{
+  "name": "kompas-website",
+  "version": "1.0.0",
+  "description": "A web application that serves as a compass, providing direction based on user input or device orientation.",
+  "main": "src/App.js",
+  "scripts": {
+    "start": "start start",
+    "build": "start build",
+    "test": "start test",
+    "eject": "start eject"
+  },
+  "keywords": [
+    "compass",
+    "direction",
+    "navigation",
+    "react"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "start": "^0.0.0"
+  },
+  "homepage": "https://yourhomepage.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/kompas-website.git"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
